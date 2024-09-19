@@ -14,7 +14,18 @@ export const index = async (req: Request, res: Response) => {
     }
     // Hết Lọc theo trạng thái
 
-    const tasks = await Task.find(find);
+    // Sắp xếp
+    const sort = {};
+    const sortKey = `${req.query.sortKey}`;
+    const sortValue = req.query.sortValue;
+    if (sortKey && sortValue) {
+        sort[sortKey] = sortValue;
+    }
+    // End Sắp xếp
+
+    const tasks = await Task
+        .find(find)
+        .sort(sort);
 
     res.json(tasks);
 }
@@ -28,4 +39,8 @@ export const detail = async (req: Request, res: Response) => {
     });
 
     res.json(tasks);
+}
+
+function sort(sort: any) {
+    throw new Error("Function not implemented.");
 }
