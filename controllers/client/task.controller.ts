@@ -88,6 +88,8 @@ export const changeStatus = async (req: Request, res: Response) => {
 // [POST] /tasks/create
 export const create = async (req: Request, res: Response) => {
     try {
+        req.body.createBy = req["user"].id;
+
         const task = new Task(req.body);
         await task.save();
         res.json({
