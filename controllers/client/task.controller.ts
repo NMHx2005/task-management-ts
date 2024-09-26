@@ -91,7 +91,26 @@ export const create = async (req: Request, res: Response) => {
         const task = new Task(req.body);
         await task.save();
         res.json({
-            message: "Thêm mới dữ liệu thành công."
+            message: "Thêm mới dữ liệu thành công.",
+            task: task
+        });
+    } catch (error) {
+        res.json({
+            message: "Not Found"
+        })
+    }
+}
+
+
+// [PATCH] /tasks/edit/:id
+export const edit = async (req: Request, res: Response) => {
+    try {
+        const id: string = req.params.id;
+        await Task.updateOne({
+            _id: id
+        }, req.body);
+        res.json({
+            message: "Cập nhật dữ liệu thành công."
         });
     } catch (error) {
         res.json({
