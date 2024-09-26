@@ -118,3 +118,23 @@ export const edit = async (req: Request, res: Response) => {
         })
     }
 }
+
+
+// [PATCH] /tasks/deleteItems
+export const deleteItems = async (req: Request, res: Response) => {
+    try {
+        const ids: string[] = req.body.ids;
+        await Task.updateOne({
+            _id: {$in: ids}
+        },{
+            deleted: true
+        });
+        res.json({
+            message: "Xóa công việc thành công."
+        });
+    } catch (error) {
+        res.json({
+            message: "Not Found"
+        })
+    }
+}
